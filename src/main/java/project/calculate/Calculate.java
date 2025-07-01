@@ -13,7 +13,7 @@ public class Calculate {
         return a+b;
     }
 
-    public int sub(int a, int b) {
+    public static int sub(int a, int b) {
         return a-b;
     }
 
