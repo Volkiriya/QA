@@ -16,7 +16,7 @@ class CalculateTest {
     }
 
     @ParameterizedTest
-    @CsvSource({"2,2,4", "0,5,5"})
+    @CsvSource({"2,2,4", "0,5,5", "0, -1, 1"})
     void adds(int a, int b, int expected) {
         assertEquals(expected, calculate.sum(a, b));
     }
