@@ -2,6 +2,7 @@ package project.calculate;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
@@ -12,7 +13,7 @@ class CalculateTest {
 
     Calculate calculate;
 
-    @Test
+    @BeforeEach
     void setUp() {
         calculate = new Calculate();
     }
@@ -56,7 +57,9 @@ class CalculateTest {
     })
     void divideTest(int a, int b, double expected) {
         double result = Calculate.divide(a, b);
-        if (Double.isNaN(expected)) {
+        if (Double.isInfinite(expected)) {
+            assertEquals(expected, result);
+        } else if (Double.isNaN(expected)) {
             assertTrue(Double.isNaN(result));
         } else {
             assertEquals(expected, result, 0.01);
