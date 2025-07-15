@@ -1,12 +1,19 @@
 package project.calculate;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class Calculate {
 
+    private static final Logger log = LoggerFactory.getLogger(Calculate.class);
+
     public static int sum(int a, int b) {
+        log.debug("a=" + a + ", b=" + b);
         return a+b;
     }
 
     public static int sub(int a, int b) {
+        log.debug("{} - {} = {}", a, b, a-b);
         return a-b;
     }
 
