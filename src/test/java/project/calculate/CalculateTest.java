@@ -7,6 +7,8 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
+import picocli.CommandLine;
+import project.cli.SumCommand;
 
 
 class CalculateTest {
@@ -64,6 +66,12 @@ class CalculateTest {
         } else {
             assertEquals(expected, result, 0.01);
         }
+    }
+
+    @Test
+    void testSumCommand() {
+        int exitCode = new CommandLine(new SumCommand()).execute("-a", "3", "-b", "5");
+        assertEquals(0, exitCode);
     }
 
 }
