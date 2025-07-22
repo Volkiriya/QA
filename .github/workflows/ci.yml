@@ -1,0 +1,37 @@
+name: Java CI with Maven + JaCoCo
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 📥 Клонировать репозиторий
+        uses: actions/checkout@v4
+
+      - name: ☕ Установить Java 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
+      - name: 📦 Кеш Maven
+        uses: actions/cache@v4
+        with:
+          path: ~/.m2
+          key: ${{ runner.os }}-maven-${{ hashFiles('**/pom.xml') }}
+          restore-keys: ${{ runner.os }}-maven
+
+      - name: 🧪 Сборка и тестирование
+        run: mvn clean verify
+
+      - name: 📊 Показать содержимое отчёта покрытия
+        if: always()
+        run: |
+          echo "Отчёт JaCoCo:"
+          ls target/site/jacoco || echo "Нет покрытия"

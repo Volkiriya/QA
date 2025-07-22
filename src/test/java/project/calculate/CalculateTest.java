@@ -1,7 +1,6 @@
 package project.calculate;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.junit.jupiter.api.Assertions.*;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -74,4 +73,26 @@ class CalculateTest {
         assertEquals(0, exitCode);
     }
 
+    @Test
+    void divideByZeroShouldReturnInfinity() {
+        double result = Calculate.divide(10, 0);
+        assertEquals(Double.POSITIVE_INFINITY, result);
+    }
+
+    @Test
+    void divideZeroByZeroShouldReturnNaN() {
+        double result = Calculate.divide(0, 0);
+        assertTrue(Double.isNaN(result));
+    }
+
+    @Test
+    void divideNegativeByZeroShouldReturnNegativeInfinity() {
+        double result = Calculate.divide(-10, 0);
+        assertEquals(Double.NEGATIVE_INFINITY, result);
+    }
+
+    @Test
+    void divideByNonZeroShouldNotThrow() {
+        assertDoesNotThrow(() -> Calculate.divide(8, 2));
+    }
 }
