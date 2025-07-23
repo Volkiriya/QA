@@ -8,6 +8,7 @@ import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import picocli.CommandLine;
 import project.cli.SumCommand;
+import project.exception.DivisionByZeroException;
 
 
 class CalculateTest {
@@ -57,7 +58,7 @@ class CalculateTest {
             "0, 0, NaN"
     })
     void divideTest(int a, int b, double expected) {
-        double result = Calculate.divide(a, b);
+        double result = Calculate.divideWithInfinity(a, b);
         if (Double.isInfinite(expected)) {
             assertEquals(expected, result);
         } else if (Double.isNaN(expected)) {
@@ -75,24 +76,24 @@ class CalculateTest {
 
     @Test
     void divideByZeroShouldReturnInfinity() {
-        double result = Calculate.divide(10, 0);
+        double result = Calculate.divideWithInfinity(10, 0);
         assertEquals(Double.POSITIVE_INFINITY, result);
     }
 
     @Test
     void divideZeroByZeroShouldReturnNaN() {
-        double result = Calculate.divide(0, 0);
+        double result = Calculate.divideWithInfinity(0, 0);
         assertTrue(Double.isNaN(result));
     }
 
     @Test
     void divideNegativeByZeroShouldReturnNegativeInfinity() {
-        double result = Calculate.divide(-10, 0);
+        double result = Calculate.divideWithInfinity(-10, 0);
         assertEquals(Double.NEGATIVE_INFINITY, result);
     }
 
     @Test
-    void divideByNonZeroShouldNotThrow() {
-        assertDoesNotThrow(() -> Calculate.divide(8, 2));
+    void divideByNonZeroThrow() {
+        assertThrows(DivisionByZeroException.class, () -> Calculate.divide(10, 0));
     }
 }

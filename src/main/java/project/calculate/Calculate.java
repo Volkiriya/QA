@@ -2,6 +2,7 @@ package project.calculate;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import project.exception.DivisionByZeroException;
 
 public class Calculate {
 
@@ -21,9 +22,17 @@ public class Calculate {
         return a*b;
      }
 
-    public static double divide(int a, int b) {
+    public static double divideWithInfinity(int a, int b) {
         if (b == 0) {
             return a == 0 ? Double.NaN : (a > 0 ? Double.POSITIVE_INFINITY : Double.NEGATIVE_INFINITY);
+        }
+        return (double) a / b;
+    }
+
+    public static double divide(int a, int b) {
+        if (b == 0) {
+            log.error("Divide by zero");
+            throw new DivisionByZeroException("Division by zero");
         }
         return (double) a / b;
     }
